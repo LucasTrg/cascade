@@ -1,11 +1,13 @@
-from conversation import Conversation
-import openai
 import logging
+
+import openai
+
+from conversation import Conversation
 
 logging.basicConfig(level=logging.DEBUG)
 
-class Executor:
 
+class Executor:
     def execute():
         raise NotImplementedError
 
@@ -16,10 +18,7 @@ class OpenAI(Executor):
         openai.organization = org
         self.model = model
 
-
-
-    def execute(self, conversation : Conversation, temp:float=0.7)->str:
-
+    def execute(self, conversation: Conversation, temp: float = 0.7) -> str:
         """Sends the conversation for completion using OpenAI's API
 
         Args:
@@ -34,17 +33,18 @@ class OpenAI(Executor):
         logging.debug(self.extract_prompt(conversation))
 
         return "TEST"
-        #return openai.Completion.create(
+        # return openai.Completion.create(
         #    engine=self.model,
         #    prompt=self.extract_prompt(conversation),
         #    temperature=temp,
-        #)
-        
+        # )
+
     def extract_prompt(self, conversation):
         chat = []
         for message in conversation.messages:
-            chat.append({message["role"]:message["content"]})
+            chat.append({message["role"]: message["content"]})
         return chat
-    
+
+
 class LocalModel(Executor):
     pass
